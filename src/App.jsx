@@ -1,20 +1,22 @@
-import './App.css';
-import {useState} from 'react';
-import LoggedButton from './components/LogginButton/LoggedButton.jsx';
-import AuthContext from './components/AuthContext/AuthContext.jsx';
-
+import "./App.css";
+import Form from "./Form.jsx";
+import RenderCounter from "./RenderCounter.jsx";
+import { useRef, useState } from "react";
+import CustomButton from "./CustomButton.jsx";
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false)
-    return (
-        <>
-            <AuthContext.Provider value={{loggedIn, setLoggedIn}}>
-                <h1>APP</h1>
-                <LoggedButton />
-            </AuthContext.Provider>
+  const [count, setCount] = useState(0);
+  const buttonRef = useRef(null);
 
-        </>
-    );
+  return (
+    <>
+      <button onClick={() => setCount((count) => count + 1)}>Клик</button>
+
+      <Form />
+      <RenderCounter />
+      <CustomButton ref={buttonRef}> КНопка</CustomButton>
+    </>
+  );
 }
 
 export default App;

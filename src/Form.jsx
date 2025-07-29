@@ -10,7 +10,7 @@ const Form = () => {
   const validate = () => {
     let isValid = true;
 
-    if (name === "") {
+    if (name.trim() === "") {
       setNameErr("Имя не должно быть пустым");
       isValid = false;
     } else {
@@ -45,6 +45,7 @@ const Form = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div>
             <label>
+              Имя:
               <input
                 type="text"
                 value={name}
@@ -57,6 +58,7 @@ const Form = () => {
           </div>
           <div>
             <label>
+              Пароль:
               <input
                 type="password"
                 value={password}

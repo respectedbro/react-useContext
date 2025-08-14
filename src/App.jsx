@@ -1,14 +1,14 @@
 import './App.css';
-import WindowSize from './components/WindowSize.jsx';
-
+import Component from './components/Component.jsx';
+import withLoading from './HOC/withLoading.jsx';
 
 
 function App() {
-
+const ComponentWithLoading = withLoading(Component)
     return (
         <>
-                <h1>APP</h1>
-            <WindowSize/>
+            <h1>APP</h1>
+            <ComponentWithLoading />
 
         </>
     );

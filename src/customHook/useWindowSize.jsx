@@ -9,10 +9,10 @@ const useWindowSize = () => {
             setWidth(window.innerWidth)
             setHeight(window.innerHeight)
         }
+        console.log('render');
 
         window.addEventListener('resize', resizeWindow)
 
-        return () => window.removeEventListener('resize', resizeWindow)
 
     }, []);
 

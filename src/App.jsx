@@ -1,14 +1,27 @@
 import './App.css';
-import Component from './components/Component.jsx';
-import withLoading from './HOC/withLoading.jsx';
+import {lazy, Suspense, useState} from 'react';
 
+const LazyBigComponent = lazy(() => import('./components/BigComponent.jsx'));
 
 function App() {
-const ComponentWithLoading = withLoading(Component)
+    const [showBigComponent, setShowBigComponent] = useState(false)
+
+   const handleShowComponent = () => {
+        setShowBigComponent(true)
+   }
+
     return (
         <>
             <h1>APP</h1>
-            <ComponentWithLoading />
+            <button onClick={handleShowComponent}>Показать компонент</button>
+            {
+                showBigComponent && (
+                    <Suspense fallback={<p>Загрузка...</p>}>
+                        <LazyBigComponent/>
+                    </Suspense>
+                )
+            }
+
 
         </>
     );

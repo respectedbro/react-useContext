@@ -1,27 +1,37 @@
 import './App.css';
-import {lazy, Suspense, useState} from 'react';
+import Layout from './Layout.jsx';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import About from './pages/About.jsx';
+import Posts from './pages/Posts.jsx';
+import Feedback from './pages/Feedback.jsx';
 
-const LazyBigComponent = lazy(() => import('./components/BigComponent.jsx'));
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Layout/>,
+        children: [
+            {
+                index:true,
+                element:<About/>,
+            },
+            {
+                path:'posts',
+                element:<Posts/>
+            },
+            {
+                path:'feedback',
+                element:<Feedback/>
+            }
+        ]
+    }
+
+])
 
 function App() {
-    const [showBigComponent, setShowBigComponent] = useState(false)
-
-   const handleShowComponent = () => {
-        setShowBigComponent(true)
-   }
 
     return (
         <>
-            <h1>APP</h1>
-            <button onClick={handleShowComponent}>Показать компонент</button>
-            {
-                showBigComponent && (
-                    <Suspense fallback={<p>Загрузка...</p>}>
-                        <LazyBigComponent/>
-                    </Suspense>
-                )
-            }
-
+            <RouterProvider router={router}/>
 
         </>
     );

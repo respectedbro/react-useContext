@@ -1,10 +1,21 @@
 const Posts = () => {
     return (
-        <h1>
-            Posts
-        </h1>
+        <>
+            <h4>
+                Posts
+            </h4>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            </p>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, libero minima.
+            </p>
+        </>
+
 
     )
 }
 
-export default  Posts
+export default Posts

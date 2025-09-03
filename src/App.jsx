@@ -1,40 +1,42 @@
-import './App.css';
-import Layout from './Layout.jsx';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import About from './pages/About.jsx';
-import Posts from './pages/Posts.jsx';
-import Feedback from './pages/Feedback.jsx';
+import "./App.css";
+import Layout from "./Layout.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Posts from "./pages/Posts.jsx";
+import Post from "./pages/Post.jsx";
 
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Layout/>,
-        children: [
-            {
-                index:true,
-                element:<About/>,
-            },
-            {
-                path:'posts',
-                element:<Posts/>
-            },
-            {
-                path:'feedback',
-                element:<Feedback/>
-            }
-        ]
-    }
-
-])
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "posts",
+        element: <Posts />,
+        errorElement: <h2>Что-то не так!</h2>,
+      },
+      {
+        path: "posts/:id",
+        element: <Post />,
+      },
+      {
+        path: "*",
+        element: <h1>😕 Страница не найдена (404)</h1>,
+      },
+    ],
+  },
+]);
 
 function App() {
-
-    return (
-        <>
-            <RouterProvider router={router}/>
-
-        </>
-    );
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

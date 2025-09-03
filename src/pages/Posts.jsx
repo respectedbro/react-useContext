@@ -1,21 +1,28 @@
+import { Link, useSearchParams } from "react-router-dom";
+
 const Posts = () => {
-    return (
-        <>
-            <h4>
-                Posts
-            </h4>
+  const postList = [
+    { id: 1, title: "Первый пост" },
+    { id: 2, title: "React круче Angular" },
+    { id: 3, title: "Фронтенд в 2025" },
+  ];
 
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
+  const [searchParams] = useSearchParams();
+  const filter = searchParams.get("filter");
 
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, libero minima.
-            </p>
-        </>
+  return (
+    <>
+      <h3>Posts</h3>
+      {filter && <p>Фильтр: {filter}</p>}
+      <ul>
+        {postList.map((post) => (
+          <li key={post.id}>
+            <Link to={`/posts/${post.id}`}>{post.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
-
-    )
-}
-
-export default Posts
+export default Posts;

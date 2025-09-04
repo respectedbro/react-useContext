@@ -9,6 +9,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <h2>Что-то не так!</h2>,
     children: [
       {
         index: true,
@@ -17,17 +18,16 @@ const router = createBrowserRouter([
       {
         path: "posts",
         element: <Posts />,
-        errorElement: <h2>Что-то не так!</h2>,
       },
       {
         path: "posts/:id",
         element: <Post />,
       },
-      {
-        path: "*",
-        element: <h1>😕 Страница не найдена (404)</h1>,
-      },
     ],
+  },
+  {
+    path: "*",
+    element: <h1>😕 Страница не найдена (404)</h1>,
   },
 ]);
 

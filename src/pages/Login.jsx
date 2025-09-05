@@ -1,18 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 
-const Login = ({ setIsAuth }) => {
-  const navigate = useNavigate();
+const Login = ({login}) => {
+    const navigate = useNavigate();
 
-  const handleLogin = () => {
-    setIsAuth(true);
-    navigate("/dashboard");
-  };
-  return (
-    <div>
-      <h2>Вход</h2>
-      <button onClick={handleLogin}>Войти</button>
-    </div>
-  );
+    const handleLogin = (role) => {
+        login(role);
+        navigate(role === 'admin' ? '/admin' : '/profile');
+    };
+    return (
+        <div>
+            <h2>Вход</h2>
+            <div style={{display: 'flex', gap: '10px'}}>
+                <button onClick={() => handleLogin('admin')}>Войти (admin)</button>
+                <button onClick={() => handleLogin('user')}>Войти (user)</button>
+            </div>
+        </div>
+    );
 };
 
 export default Login;

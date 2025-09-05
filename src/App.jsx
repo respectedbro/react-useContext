@@ -33,6 +33,7 @@ function App() {
         {
             path: '/',
             element: <Layout isAuth={isAuth} logout={logout}/>,
+            errorElement: <h2>Что-то не так!</h2>,
             children: [
                 {
                     index: true,
@@ -57,13 +58,13 @@ function App() {
                 {
                     path: 'login',
                     element: <Login login={login}/>,
-                    errorElement: <h2>Что-то не так!</h2>
                 },
-                {
-                    path: '*',
-                    element: <h2>Error</h2>
-                }
+
             ]
+        },
+        {
+            path: '*',
+            element: <h2>Error</h2>
         }
     ]);
 

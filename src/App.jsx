@@ -1,51 +1,58 @@
 import "./App.css";
-import Layout from "./Layout.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import { useState } from "react";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import Login from "./pages/Login.jsx";
-import NotFound from "./pages/NotFound.jsx";
+
+const INCREMENT = "INCREMENT";
+const DECREMENT = "DECREMENT";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
+  const createStore = (reducer, initialState) => {
+    const currentReducer = reducer;
+    let state = initialState;
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          index: true,
-          element: <Home />,
-        },
-        {
-          path: "dashboard",
-          element: (
-            <ProtectedRoute isAuth={isAuth}>
-              <Dashboard onLogout={() => setIsAuth(false)}></Dashboard>
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "login",
-          element: <Login setIsAuth={setIsAuth} />,
-          errorElement: <h2>Что-то не так!</h2>,
-        },
-        {
-          path: "*",
-          element: <NotFound />,
-        },
-      ],
-    },
-  ]);
+    let listener = () => {
+      console.log("initial listener");
+    };
 
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+    return {
+      dispatch(action) {
+        state = currentReducer(state, action);
+        listener();
+      },
+
+      subscribe(newListener) {
+        listener = newListener;
+      },
+
+      getState() {
+        return state;
+      },
+    };
+  };
+
+  const counter = (state = 0, action) => {
+    switch (action.type) {
+      case INCREMENT:
+        return state + 1;
+      case DECREMENT:
+        return state - 1;
+      default:
+        return state;
+    }
+  };
+
+  const store = createStore(counter);
+
+  store.subscribe(() => {
+    console.log(store.getState());
+  });
+
+  store.dispatch({ type: INCREMENT });
+  store.dispatch({ type: INCREMENT });
+  store.dispatch({ type: INCREMENT });
+  store.dispatch({ type: INCREMENT });
+  store.dispatch({ type: INCREMENT });
+  store.dispatch({ type: DECREMENT });
+
+  return <></>;
 }
 
 export default App;

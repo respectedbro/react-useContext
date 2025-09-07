@@ -1,58 +1,18 @@
 import "./App.css";
-
-const INCREMENT = "INCREMENT";
-const DECREMENT = "DECREMENT";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment } from "./features/counter/counterSlice.js";
 
 function App() {
-  const createStore = (reducer, initialState) => {
-    const currentReducer = reducer;
-    let state = initialState;
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
 
-    let listener = () => {
-      console.log("initial listener");
-    };
-
-    return {
-      dispatch(action) {
-        state = currentReducer(state, action);
-        listener();
-      },
-
-      subscribe(newListener) {
-        listener = newListener;
-      },
-
-      getState() {
-        return state;
-      },
-    };
-  };
-
-  const counter = (state = 0, action) => {
-    switch (action.type) {
-      case INCREMENT:
-        return state + 1;
-      case DECREMENT:
-        return state - 1;
-      default:
-        return state;
-    }
-  };
-
-  const store = createStore(counter);
-
-  store.subscribe(() => {
-    console.log(store.getState());
-  });
-
-  store.dispatch({ type: INCREMENT });
-  store.dispatch({ type: INCREMENT });
-  store.dispatch({ type: INCREMENT });
-  store.dispatch({ type: INCREMENT });
-  store.dispatch({ type: INCREMENT });
-  store.dispatch({ type: DECREMENT });
-
-  return <></>;
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Счётчик: {count}</h1>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <button onClick={() => dispatch(increment())}>+</button>
+    </div>
+  );
 }
 
 export default App;

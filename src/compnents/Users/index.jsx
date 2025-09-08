@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useState} from 'react';
 import {addUser, removeUser} from '../../features/users/usersSlice.js';
 
-import './style.css'
+import './style.css';
 
 const Users = () => {
     const [newUser, setNewUser] = useState('');
@@ -10,24 +10,29 @@ const Users = () => {
     const dispatch = useDispatch();
 
     const handleAddUser = (e) => {
-        e.preventDefault()
-        dispatch(addUser(newUser))
-        setNewUser('')
-    }
+        e.preventDefault();
+        if (newUser.trim() === '') {
+            alert('введите имя');
+        } else {
+            dispatch(addUser(newUser));
+            setNewUser('');
+        }
+
+    };
 
     const handleRemoveUser = (id) => {
-        dispatch(removeUser(id))
-    }
+        dispatch(removeUser(id));
+    };
 
 
     return (
 
 
-        <div className='container'>
+        <div className="container">
             <h3>Users</h3>
-            <form className='form' onSubmit={handleAddUser}>
+            <form className="form" onSubmit={handleAddUser}>
                 <input
-                    className='input'
+                    className="input"
                     type="text"
                     placeholder="введите имя"
                     value={newUser}
@@ -37,14 +42,14 @@ const Users = () => {
             </form>
 
             <div>
-                <ul className='list'>
+                <ul className="list">
                     {users.map((user) => (
-                        <li className='list-item' key={user.id}>
+                        <li className="list-item" key={user.id}>
                             <div>{user.name}</div>
                             <button onClick={() => handleRemoveUser(user.id)}>Удалить</button>
                         </li>
 
-                    )) }
+                    ))}
 
                 </ul>
             </div>
@@ -52,4 +57,4 @@ const Users = () => {
     );
 };
 
-export default Users
+export default Users;

@@ -2,6 +2,7 @@ import './App.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {decrement, increment} from './features/counter/counterSlice.js';
 import Users from './compnents/Users/index.jsx';
+import Posts from './compnents/Posts/index.jsx';
 
 function App() {
     const count = useSelector((state) => state.counter.value);
@@ -15,6 +16,7 @@ function App() {
                 <button onClick={() => dispatch(increment())}>+</button>
             </div>
             <Users/>
+            <Posts/>
         </>
     );
 }

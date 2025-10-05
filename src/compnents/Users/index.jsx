@@ -1,60 +1,45 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {useState} from 'react';
-import {addUser, removeUser} from '../../features/users/usersSlice.js';
+import "./style.css";
 
-import './style.css';
+import { useState, useTransition } from "react";
 
-const Users = () => {
-    const [newUser, setNewUser] = useState('');
-    const users = useSelector((state) => state.users.users);
-    const dispatch = useDispatch();
+const names = ["Mk", "John", "Bob", "Vasya", "Петя", "Елена", "ASD", "Dm"];
 
-    const handleAddUser = (e) => {
-        e.preventDefault();
-        if (newUser.trim() === '') {
-            alert('введите имя');
-        } else {
-            dispatch(addUser(newUser));
-            setNewUser('');
-        }
+function Users() {
+  const [search, setSearch] = useState("");
+  const [filteredNames, setFilteredNames] = useState(names);
+  const [isPending, startTransition] = useTransition();
 
-    };
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
 
-    const handleRemoveUser = (id) => {
-        dispatch(removeUser(id));
-    };
+    startTransition(() => {
+      const result = names.filter((name) =>
+        name.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredNames(result);
+    });
+  };
 
+  return (
+    <div style={{ padding: "20px", minHeight: "300px" }}>
+      <h2>Поиск имен</h2>
+      <input
+        value={search}
+        onChange={handleSearch}
+        placeholder="Введите имя..."
+        style={{ padding: "10px" }}
+      />
 
-    return (
+      {isPending && <p>Загрузка...</p>}
 
-
-        <div className="container">
-            <h3>Users</h3>
-            <form className="form" onSubmit={handleAddUser}>
-                <input
-                    className="input"
-                    type="text"
-                    placeholder="введите имя"
-                    value={newUser}
-                    onChange={(e) => setNewUser(e.target.value)}
-                />
-                <button type="submit">Добавить</button>
-            </form>
-
-            <div>
-                <ul className="list">
-                    {users.map((user) => (
-                        <li className="list-item" key={user.id}>
-                            <div>{user.name}</div>
-                            <button onClick={() => handleRemoveUser(user.id)}>Удалить</button>
-                        </li>
-
-                    ))}
-
-                </ul>
-            </div>
-        </div>
-    );
-};
+      <ul style={{ marginTop: "20px", minHeight: "300px" }}>
+        {filteredNames.map((name, index) => (
+          <li key={index}>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default Users;

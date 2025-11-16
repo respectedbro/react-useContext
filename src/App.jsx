@@ -1,23 +1,36 @@
 import './App.css';
-import {useDispatch, useSelector} from 'react-redux';
-import {decrement, increment} from './features/counter/counterSlice.js';
-import Users from './compnents/Users/index.jsx';
-import Posts from './compnents/Posts/index.jsx';
+import {useState} from 'react';
+import {Modal} from './compnents/Modal/index.jsx';
+
 
 function App() {
-    const count = useSelector((state) => state.counter.value);
-    const dispatch = useDispatch();
+    const [text, setText] = useState('Some TExt');
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleClose = () => {
+        setOpenModal(false);
+    };
+
+    const handleSave = (value) => {
+        setText(value);
+        setOpenModal(false);
+    };
 
     return (
-        <>
-            <div style={{padding: 20}}>
-                <h1>Счётчик: {count}</h1>
-                <button onClick={() => dispatch(decrement())}>-</button>
-                <button onClick={() => dispatch(increment())}>+</button>
-            </div>
-            <Users/>
-            <Posts/>
-        </>
+        <div style={{ padding: 20,position: "relative" }}>
+            <h1> text: {text}</h1>
+            <button onClick={() => setOpenModal(true)}>Edit</button>
+            {
+                openModal && (
+                    <Modal
+                        handleClose={handleClose}
+                        handleSave={handleSave}
+                        text={text}
+                    />
+                )
+            }
+
+        </div>
     );
 }
 

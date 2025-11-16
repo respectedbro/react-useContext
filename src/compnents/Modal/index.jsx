@@ -5,6 +5,7 @@ export const Modal = ({handleClose, text, handleSave}) => {
     const [value, setValue] = useState(text);
 
     return (
+        <div className='modal-overlay'>
         <div className="modal">
             <span onClick={handleClose}>X</span>
             <h3>Edit text</h3>
@@ -15,6 +16,7 @@ export const Modal = ({handleClose, text, handleSave}) => {
 
             />
             <button onClick={() => handleSave(value)}>Save</button>
+        </div>
         </div>
     );
 };

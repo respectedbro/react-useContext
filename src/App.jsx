@@ -16,7 +16,15 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 20, position: "relative", height: "200vh" }}>
+    <div
+      style={{
+        padding: 20,
+        position: "relative",
+        height: "200vh",
+        overflow: "hidden",
+        transform: "translate(0, 0)",
+      }}
+    >
       <h1> text: {text}</h1>
       <button onClick={() => setOpenModal(true)}>Edit</button>
       {openModal && (
